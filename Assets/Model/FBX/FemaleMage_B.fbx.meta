@@ -233,7 +233,13 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Avatar Rig Configuration mis-match. Bone length in configuration
+      does not match position in animation file:\n\t'rig:LThigh' : position error
+      = 227.909637 mm\n\t'rig:LShin' : position error = 335.914612 mm\n\t'rig:LFootBone1'
+      : position error = 369.033386 mm\n\t'rig:LFootBone2' : position error = 142.556656
+      mm\n\t'rig:RThigh' : position error = 227.909637 mm\n\t'rig:RShin' : position
+      error = 335.914612 mm\n\t'rig:RFootBone1' : position error = 369.033386 mm\n\t'rig:RFootBone2'
+      : position error = 142.556641 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -486,12 +492,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: rig:Lumbar1
       parentName: 
-      position: {x: -0, y: 0.10254824, z: 0.0015645517}
+      position: {x: -0, y: 0.102548234, z: 0.0015645517}
       rotation: {x: 0.45144507, y: -0.5442402, z: -0.45144507, w: 0.5442402}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:Lumbar2
       parentName: 
-      position: {x: -0.49313068, y: -2.7061685e-17, z: -4.807121e-32}
+      position: {x: -0.49313065, y: -2.7061685e-17, z: -4.807121e-32}
       rotation: {x: -2.7755576e-17, y: -2.4980018e-16, z: -0.10796365, w: 0.9941549}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RShoulder
@@ -501,12 +507,12 @@ ModelImporter:
       scale: {x: -1, y: -1, z: -1}
     - name: rig:RBicep
       parentName: 
-      position: {x: -0.31978452, y: 1.4882518e-16, z: -7.999037e-16}
+      position: {x: -0.31978452, y: 1.4882517e-16, z: -7.9990366e-16}
       rotation: {x: -0.007614238, y: -0.012296614, z: -0.038755354, w: 0.9991441}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RForearm
       parentName: 
-      position: {x: -0.66551137, y: 0, z: -3.6927923e-16}
+      position: {x: -0.66551137, y: 0, z: -3.6927918e-16}
       rotation: {x: 5.4860633e-17, y: -1.1761364e-28, z: 0.03984095, w: 0.99920607}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RHand
@@ -526,17 +532,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LBicep
       parentName: 
-      position: {x: -0.31978452, y: 5.4141595e-17, z: -2.0360617e-16}
+      position: {x: -0.31978452, y: 5.414159e-17, z: -2.0360615e-16}
       rotation: {x: -0.007614238, y: -0.012296614, z: -0.038755354, w: 0.9991441}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LForearm
       parentName: 
-      position: {x: -0.66551137, y: 0, z: 1.2783828e-16}
+      position: {x: -0.66551137, y: 0, z: 1.2783826e-16}
       rotation: {x: 3.6835772e-17, y: -8.673618e-19, z: 0.03984095, w: 0.99920607}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LHand
       parentName: 
-      position: {x: -0.6004324, y: -3.5631222e-16, z: 5.468716e-16}
+      position: {x: -0.6004324, y: -3.5631222e-16, z: 5.468715e-16}
       rotation: {x: 0.7124738, y: -0.009070962, z: -0.01669709, w: 0.70144147}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:left_weapon
@@ -551,17 +557,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: rig:Head
       parentName: 
-      position: {x: -0.23885417, y: -3.2047476e-32, z: -4.5102813e-18}
+      position: {x: -0.23885415, y: -3.2047476e-32, z: -4.5102813e-18}
       rotation: {x: 2.7755576e-17, y: 0.07251418, z: -5.551115e-17, w: 0.9973674}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LThigh
       parentName: 
-      position: {x: -0.41713205, y: -0.15382235, z: -0.0023468272}
+      position: {x: -0.41713202, y: -0.15382235, z: -0.002346827}
       rotation: {x: 0.5624927, y: 0.48231816, z: -0.49032417, w: -0.4588609}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LShin
       parentName: 
-      position: {x: -0.6552879, y: 0, z: 2.1423836e-17}
+      position: {x: -0.6552879, y: 0, z: 2.1423834e-17}
       rotation: {x: 5.551115e-17, y: 5.551115e-17, z: -0.14918114, w: 0.9888099}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LFootBone1
@@ -571,27 +577,27 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: rig:LFootBone2
       parentName: 
-      position: {x: -0.2780934, y: 3.608225e-17, z: -2.0774696e-17}
+      position: {x: -0.27809337, y: 3.608225e-17, z: -2.0774696e-17}
       rotation: {x: 1.3877788e-16, y: 2.93654e-14, z: 0.12773523, w: 0.9918083}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RThigh
       parentName: 
-      position: {x: 0.41713205, y: -0.15382235, z: -0.0023468272}
+      position: {x: 0.41713202, y: -0.15382235, z: -0.002346827}
       rotation: {x: -0.49032417, y: -0.4588609, z: 0.5624927, w: 0.48231816}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RShin
       parentName: 
-      position: {x: -0.6552879, y: -3.608225e-17, z: -5.5250943e-17}
+      position: {x: -0.6552879, y: -3.608225e-17, z: -5.5250947e-17}
       rotation: {x: -5.551115e-17, y: -2.7755576e-17, z: -0.14918114, w: 0.9888099}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RFootBone1
       parentName: 
-      position: {x: -0.71989447, y: 1.7123933e-16, z: -3.641723e-16}
+      position: {x: -0.71989447, y: 1.7123932e-16, z: -3.6417229e-16}
       rotation: {x: -0.039297756, y: 0.036537096, z: 0.49740043, w: 0.86586004}
       scale: {x: 1, y: 1, z: 1}
     - name: rig:RFootBone2
       parentName: 
-      position: {x: -0.2780934, y: 1.8041125e-17, z: -5.9711614e-17}
+      position: {x: -0.27809337, y: 1.8041125e-17, z: -5.9711614e-17}
       rotation: {x: 4.9849014e-14, y: -1.1057821e-13, z: 0.12773523, w: 0.9918083}
       scale: {x: 1, y: 1, z: 1}
     - name: shadow
