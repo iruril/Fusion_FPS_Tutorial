@@ -9,9 +9,10 @@ using Random = UnityEngine.Random;
 
 public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public NetworkPlayer playerPrefab;
+    [SerializeField] private NetworkPrefabRef _playerPrefab;
+    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
-    private CharacterInputHandler characterInputHandler;
+    private bool _isJumpPressed;
 
     #region Fusion Network Callbacks
     public void OnConnectedToServer(NetworkRunner runner)
@@ -40,15 +41,18 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        if(characterInputHandler == null && NetworkPlayer.LocalPlayer != null)
-        {
-            characterInputHandler = NetworkPlayer.LocalPlayer.GetComponent<CharacterInputHandler>();
-        }
+        var data = new NetworkInputData();
 
-        if(characterInputHandler != null) 
-        {
-            input.Set(characterInputHandler.GetNetworkInput());
-        }
+        data.rotationInput.x = Input.GetAxis("Mouse X");
+        data.rotationInput.y = -Input.GetAxis("Mouse Y");
+
+        data.movementInput.x = Input.GetAxisRaw("Horizontal");
+        data.movementInput.y = Input.GetAxisRaw("Vertical");
+
+        data.buttons.Set(NetworkInputData.SPACE, _isJumpPressed);
+        _isJumpPressed = false;
+
+        input.Set(data);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -69,11 +73,12 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         {
             Debug.Log("[플레이어 입장] : 우리는 서버입니다. 유저를 생성합니다.");
             Vector3 spawnPoint = Utils.GetRandom2X2PositionByVector3(transform.position);
-            NetworkPlayer netPlayerObject = runner.Spawn(playerPrefab, spawnPoint, Quaternion.identity, player);
+            NetworkObject netPlayerObject = runner.Spawn(_playerPrefab, spawnPoint, Quaternion.identity, player);
             if(netPlayerObject.TryGetComponent<CharacterMovementHandler>(out var movementHandler))
             {
                 movementHandler._mySpawnPoint = transform.position;
             }
+            _spawnedCharacters.Add(player, netPlayerObject);
         }
         else
         {
@@ -83,6 +88,11 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
+        {
+            runner.Despawn(networkObject);
+            _spawnedCharacters.Remove(player);
+        }
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
@@ -114,8 +124,8 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     }
     #endregion
 
-    void Start()
+    private void Update()
     {
-        
+        _isJumpPressed = _isJumpPressed | Input.GetKeyDown(KeyCode.Space);
     }
 }
