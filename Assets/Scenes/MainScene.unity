@@ -457,7 +457,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5089113929333529659, guid: 1a8c0f5a14b77a14aa9caa0531e32e09, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a8c0f5a14b77a14aa9caa0531e32e09, type: 3}
@@ -919,7 +920,7 @@ Transform:
   m_GameObject: {fileID: 588369143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.75, y: 24.273462, z: 3.53}
+  m_LocalPosition: {x: 10, y: 25, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1305,12 +1306,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
+    quality: 4
     frameInfluence: 0.1
     jitterScale: 1
     mipBias: 0
     varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    contrastAdaptiveSharpening: 1
 --- !u!81 &961739751
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1337,7 +1338,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -1352,7 +1353,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 81.8
   m_Depth: -1
@@ -1378,8 +1379,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.016236972, y: 0.92476785, z: 0.040005483, w: -0.37807453}
-  m_LocalPosition: {x: 19.156204, y: 27.6238, z: 13.431801}
+  m_LocalRotation: {x: 0.023840295, y: 0.8898883, z: 0.046750087, w: -0.4531501}
+  m_LocalPosition: {x: 14.060996, y: 25.56636, z: 4.6038446}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2004,7 +2005,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1497288432546318251, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
+    - {fileID: 2178422451564846837, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
+    - {fileID: 3479479885581982648, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
@@ -2683,7 +2687,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1497288432546318251, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
+    - {fileID: 3479479885581982648, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
+    - {fileID: 3566261952779555522, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2d24ce69dd8d474e8fcf030763fe17f, type: 3}

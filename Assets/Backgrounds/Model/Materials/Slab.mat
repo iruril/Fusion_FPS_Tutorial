@@ -14,7 +14,6 @@ Material:
   m_ValidKeywords:
   - N_F_EAL_ON
   - N_F_GLO_ON
-  - N_F_O_MOTTSO_ON
   - N_F_O_ON
   - N_F_RDC_ON
   - N_F_RELGI_ON
@@ -239,7 +238,7 @@ Material:
     - _N_F_HDLS: 0
     - _N_F_HPSS: 0
     - _N_F_MC: 0
-    - _N_F_MSSOLTFO: 1
+    - _N_F_MSSOLTFO: 0
     - _N_F_NFD: 0
     - _N_F_NLASOBF: 0
     - _N_F_NM: 0
@@ -262,7 +261,7 @@ Material:
     - _Opacity: 1
     - _Oper: 0
     - _OutlineExtrudeMethod: 1
-    - _OutlineWidth: 0.15
+    - _OutlineWidth: 1
     - _OutlineWidthAffectedByViewDistance: 0
     - _OutlineZPostionInCamera: 0
     - _OverallShadowColorPower: 1

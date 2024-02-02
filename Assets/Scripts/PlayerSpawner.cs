@@ -11,6 +11,8 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     public NetworkPlayer playerPrefab;
 
+    private CharacterInputHandler characterInputHandler;
+
     #region Fusion Network Callbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
@@ -38,6 +40,15 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if(characterInputHandler == null && NetworkPlayer.LocalPlayer != null)
+        {
+            characterInputHandler = NetworkPlayer.LocalPlayer.GetComponent<CharacterInputHandler>();
+        }
+
+        if(characterInputHandler != null) 
+        {
+            input.Set(characterInputHandler.GetNetworkInput());
+        }
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -57,11 +68,12 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             Debug.Log("[플레이어 입장] : 우리는 서버입니다. 유저를 생성합니다.");
-            float xError = Random.Range(-2.0f, 2.0f);
-            float yError = Random.Range(-2.0f, 2.0f);
-
-            Vector3 spawnPoint = transform.position + Vector3.forward * xError + Vector3.right *yError;
-            runner.Spawn(playerPrefab, spawnPoint, Quaternion.identity, player);
+            Vector3 spawnPoint = Utils.GetRandom2X2PositionByVector3(transform.position);
+            NetworkPlayer netPlayerObject = runner.Spawn(playerPrefab, spawnPoint, Quaternion.identity, player);
+            if(netPlayerObject.TryGetComponent<CharacterMovementHandler>(out var movementHandler))
+            {
+                movementHandler._mySpawnPoint = transform.position;
+            }
         }
         else
         {
