@@ -11,4 +11,13 @@ public static class Utils
 
         return position + Vector3.forward * xError + Vector3.right * yError;
     }
+
+    public static void SerRenderLayerInChildren(Transform transform, int layerIndex)
+    {
+        transform.gameObject.layer = layerIndex;
+        foreach (var item in transform.GetComponentsInChildren<Transform>())
+        {
+            item.gameObject.layer = layerIndex;
+        }
+    }
 }

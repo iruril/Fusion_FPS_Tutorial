@@ -50,6 +50,7 @@ namespace Fusion
         public float braking = 10.0f;
         public float maxSpeed = 2.0f;
         public float rotationSpeed = 15.0f;
+        public float viewUpDownRotationSpeed = 50f;
 
         Tick _initial;
         CharacterController _controller;
@@ -110,7 +111,6 @@ namespace Fusion
             else
             {
                 horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
             }
 
             moveVelocity.x = horizontalVel.x;
@@ -124,7 +124,7 @@ namespace Fusion
 
         public void Rotate(float rotationY)
         {
-            transform.Rotate(0, rotationY * Runner.DeltaTime, 0);
+            transform.Rotate(0, rotationY * Runner.DeltaTime * rotationSpeed, 0);
         }
 
         public override void Spawned()
