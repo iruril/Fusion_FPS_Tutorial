@@ -6,8 +6,6 @@ using Fusion;
 public struct NetworkInputData : INetworkInput
 {
     public Vector2 movementInput;
-    public Vector2 rotationInput;
-
-    public const byte SPACE = 1;
-    public NetworkButtons buttons;
+    public float rotationInput;
+    public NetworkBool isJumpPressed;
 }

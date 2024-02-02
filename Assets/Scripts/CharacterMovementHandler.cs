@@ -11,34 +11,28 @@ public class CharacterMovementHandler : NetworkBehaviour
     private Camera _localCamera;
     public Vector3 _mySpawnPoint { get; set; }
 
-    private Vector2 _viewRotation;
+    private Vector2 _viewInput = Vector2.zero;
     private float _camRotationX = 0;
 
     private void Awake()
     {
         _networkCharacterController = GetComponent<NetworkCharacterController>();
+        _localCamera = Camera.main;
+        _localCamera.transform.parent = _camTarget;
+        _localCamera.transform.localPosition = Vector3.zero + transform.forward * -5.0f + transform.right * 2.0f;
+        _localCamera.transform.localRotation = this.transform.rotation;
     }
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
-        if (Object.HasInputAuthority)
-        {
-            _localCamera = Camera.main;
-            _localCamera.transform.parent = _camTarget;
-            _localCamera.transform.localPosition = Vector3.zero + transform.forward * -5.0f + transform.right * 2.0f;
-            _localCamera.transform.localRotation = this.transform.rotation;
-        }
     }
 
     void Update()
     {
-        if (!Object.HasInputAuthority) return;
-
-        _camRotationX += _viewRotation.y * Time.deltaTime * _camSensetivity;
+        _camRotationX += _viewInput.y * Time.deltaTime * _camSensetivity;
         _camRotationX = Mathf.Clamp(_camRotationX, -60, 60);
+
         _camTarget.transform.localRotation = Quaternion.Euler(_camRotationX, 0, 0);
     }
 
@@ -46,22 +40,25 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         if(GetInput(out NetworkInputData inputData))
         {
-            _networkCharacterController.Rotate(inputData.rotationInput.x * _camSensetivity);
-
-            _viewRotation = inputData.rotationInput;
+            _networkCharacterController.Rotate(inputData.rotationInput * _camSensetivity);
 
             Vector3 moveDirection = transform.forward * inputData.movementInput.y + transform.right * inputData.movementInput.x; ;
             moveDirection.Normalize();
 
-            _networkCharacterController.Move(5 * moveDirection * Runner.DeltaTime);
+            _networkCharacterController.Move(moveDirection);
 
-            if(inputData.buttons.IsSet(NetworkInputData.SPACE))
+            if (inputData.isJumpPressed)
             {
                 _networkCharacterController.Jump();
             }
 
             CheckFallRespawn();
         }
+    }
+
+    public void SetViewInputVector(Vector2 inputAxisData)
+    {
+        _viewInput = inputAxisData;
     }
 
     private void CheckFallRespawn()

@@ -873,7 +873,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 0
+  m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
@@ -906,7 +906,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 1
+  m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300002, guid: 6c8bd974b9d75394dbe398ce2e3b6cac, type: 3}
   m_Bones:
@@ -946,10 +946,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6107401137894839115}
   - component: {fileID: 2642894034398319869}
+  - component: {fileID: -6755812762144633259}
   - component: {fileID: 116347449203547007}
   - component: {fileID: 2576138975466043033}
   - component: {fileID: 3662773568233885599}
   - component: {fileID: 279026685068360541}
+  - component: {fileID: 363320758652166535}
   m_Layer: 0
   m_Name: NetPlayer_Type001
   m_TagString: Untagged
@@ -996,6 +998,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-6755812762144633259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855329447174113136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c09d7162d71e69438ec475dde8d0f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &116347449203547007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,6 +1027,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: -6755812762144633259}
   - {fileID: 3662773568233885599}
   - {fileID: 279026685068360541}
 --- !u!143 &2576138975466043033
@@ -1073,3 +1088,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camTarget: {fileID: 6922604190974162840}
   _camSensetivity: 50
+--- !u!114 &363320758652166535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855329447174113136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c4b65904cd34f4ea59e913a7633c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
