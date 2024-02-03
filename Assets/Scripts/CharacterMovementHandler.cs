@@ -5,7 +5,6 @@ using Fusion;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
-    [SerializeField] private float _camSensetivity = 50f;
     private NetworkCharacterController _networkCharacterController;
     private Camera _localCamera;
     public Vector3 _mySpawnPoint { get; set; }
