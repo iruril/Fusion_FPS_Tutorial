@@ -6,15 +6,15 @@ using Fusion;
 public class CharacterMovementHandler : NetworkBehaviour
 {
     private NetworkCharacterController _networkCharacterController;
-    private Camera _localCamera;
-    public Vector3 _mySpawnPoint { get; set; }
+    private HPHandler _hPHandler;
 
-    private Vector2 _viewInput = Vector2.zero;
+    private bool isRespawnReqeusted = false;
+    public Vector3 _mySpawnPoint { get; set; }
 
     private void Awake()
     {
         _networkCharacterController = GetComponent<NetworkCharacterController>();
-        _localCamera = GetComponentInChildren<Camera>();
+        _hPHandler = GetComponent<HPHandler>();
     }
 
     void Start()
@@ -24,6 +24,17 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (Object.HasStateAuthority)
+        {
+            if (isRespawnReqeusted)
+            {
+                Respawn();
+                return;
+            }
+
+            if (_hPHandler.IsDead) return;
+        }
+
         if(GetInput(out NetworkInputData inputData))
         {
             transform.forward = inputData.aimForwardVector;
@@ -47,9 +58,31 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         if(this.transform.position.y < 10)
         {
-            Vector3 spawnPoint = Utils.GetRandom2X2PositionByVector3(_mySpawnPoint);
-            _networkCharacterController.Teleport(spawnPoint);
-            _networkCharacterController.Velocity = Vector3.zero;
+            if (Object.HasStateAuthority)
+            {
+                Respawn();
+            }
         }
-    } 
+    }
+
+    public void RequestRespawn()
+    {
+        isRespawnReqeusted = true;
+    }
+
+    private void Respawn()
+    {
+        Vector3 spawnPoint = Utils.GetRandom2X2PositionByVector3(_mySpawnPoint);
+        _networkCharacterController.Teleport(spawnPoint);
+        _networkCharacterController.Velocity = Vector3.zero;
+
+        _hPHandler.OnRespawn();
+
+        isRespawnReqeusted = false;
+    }
+
+    public void SetCharacterControllerEnabled(bool isEnabled)
+    {
+        _networkCharacterController.Controller.enabled = isEnabled;
+    }
 }

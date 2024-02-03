@@ -53,7 +53,7 @@ namespace Fusion
         public float viewUpDownRotationSpeed = 50f;
 
         Tick _initial;
-        CharacterController _controller;
+        public CharacterController Controller;
 
         public Vector3 Velocity
         {
@@ -69,9 +69,9 @@ namespace Fusion
 
         public void Teleport(Vector3? position = null, Quaternion? rotation = null)
         {
-            _controller.enabled = false;
+            Controller.enabled = false;
             NetworkTRSP.Teleport(this, transform, position, rotation);
-            _controller.enabled = true;
+            Controller.enabled = true;
         }
 
 
@@ -116,10 +116,10 @@ namespace Fusion
             moveVelocity.x = horizontalVel.x;
             moveVelocity.z = horizontalVel.z;
 
-            _controller.Move(moveVelocity * deltaTime);
+            Controller.Move(moveVelocity * deltaTime);
 
             Data.Velocity = (transform.position - previousPos) * Runner.TickRate;
-            Data.Grounded = _controller.isGrounded;
+            Data.Grounded = Controller.isGrounded;
         }
 
         public void Rotate(float rotationY)
@@ -130,7 +130,7 @@ namespace Fusion
         public override void Spawned()
         {
             _initial = default;
-            TryGetComponent(out _controller);
+            TryGetComponent(out Controller);
             CopyToBuffer();
         }
 
@@ -156,7 +156,7 @@ namespace Fusion
 
         void Awake()
         {
-            TryGetComponent(out _controller);
+            TryGetComponent(out Controller);
         }
 
         void CopyToBuffer()
@@ -168,13 +168,13 @@ namespace Fusion
         void CopyToEngine()
         {
             // CC must be disabled before resetting the transform state
-            _controller.enabled = false;
+            Controller.enabled = false;
 
             // set position and rotation
             transform.SetPositionAndRotation(Data.TRSPData.Position, Data.TRSPData.Rotation);
 
             // Re-enable CC
-            _controller.enabled = true;
+            Controller.enabled = true;
         }
     }
 }

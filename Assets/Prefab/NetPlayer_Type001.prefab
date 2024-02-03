@@ -1160,6 +1160,7 @@ GameObject:
   - component: {fileID: 5898834392228538740}
   - component: {fileID: 4355526819297081551}
   - component: {fileID: 6871565884076811583}
+  - component: {fileID: 1223816222209674458}
   - component: {fileID: 8218893783291610220}
   m_Layer: 0
   m_Name: NetPlayer_Type001
@@ -1244,6 +1245,7 @@ MonoBehaviour:
   - {fileID: 279026685068360541}
   - {fileID: 4355526819297081551}
   - {fileID: 6871565884076811583}
+  - {fileID: 1223816222209674458}
 --- !u!143 &2576138975466043033
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1264,7 +1266,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 5
-  m_Radius: 1
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1289,6 +1291,7 @@ MonoBehaviour:
   maxSpeed: 6
   rotationSpeed: 80
   viewUpDownRotationSpeed: 60
+  Controller: {fileID: 0}
 --- !u!114 &279026685068360541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1425,6 +1428,7 @@ MonoBehaviour:
   _IsFiring: 0
   _HitPosition: {x: 0, y: 0, z: 0}
   FireParticle: {fileID: 37609648330671113}
+  HitParticle: {fileID: 449400620610643060}
   aimPoint: {fileID: 5773677960794982015}
   collisionLayers:
     serializedVersion: 2
@@ -1447,6 +1451,25 @@ MonoBehaviour:
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
   - {fileID: 2149137299916673169}
+--- !u!114 &1223816222209674458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855329447174113136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44722cf208677a40b0e9c08f24a356d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _HP: 0
+  _IsDead: 0
+  ColorOnHit: {r: 0.6792453, g: 0.23389105, b: 0.23389105, a: 0.29803923}
+  OnHitImage: {fileID: 4606747521278698190}
+  PlayerModel: {fileID: 8724464777968193951}
+  DeathGameObjectPrefab: {fileID: 2283229683088611668, guid: 51966cf5287d989478276b02a463b117,
+    type: 3}
 --- !u!120 &8218893783291610220
 LineRenderer:
   serializedVersion: 2
@@ -1559,6 +1582,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7197298230204100179}
     m_Modifications:
+    - target: {fileID: 4565801442349106648, guid: e47c44ee15e836843975fef74ca41c30,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565801442349106648, guid: e47c44ee15e836843975fef74ca41c30,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565801442349106648, guid: e47c44ee15e836843975fef74ca41c30,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5800291124144517762, guid: e47c44ee15e836843975fef74ca41c30,
         type: 3}
       propertyPath: m_Name
@@ -1627,6 +1665,12 @@ PrefabInstance:
 --- !u!198 &37609648330671113 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4172011685207975335, guid: e47c44ee15e836843975fef74ca41c30,
+    type: 3}
+  m_PrefabInstance: {fileID: 4134422395034870190}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &449400620610643060 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4565801442349106650, guid: e47c44ee15e836843975fef74ca41c30,
     type: 3}
   m_PrefabInstance: {fileID: 4134422395034870190}
   m_PrefabAsset: {fileID: 0}
@@ -1754,6 +1798,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3019bfeda32d40f488c570130826945d, type: 3}
+--- !u!114 &4606747521278698190 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 17023051155777966, guid: 3019bfeda32d40f488c570130826945d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4598753740677729120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7546036150981883883 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6299104105761586315, guid: 3019bfeda32d40f488c570130826945d,

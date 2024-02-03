@@ -6,6 +6,7 @@ using Fusion;
 public class WeaponHandler : NetworkBehaviour
 {
     private ChangeDetector _changeDetector;
+    private HPHandler _handler;
 
     [Networked]
     public bool IsFiring {  get; set; }
@@ -13,16 +14,25 @@ public class WeaponHandler : NetworkBehaviour
     public Vector3 HitPosition { get; set; }
 
     public ParticleSystem FireParticle;
+    public ParticleSystem HitParticle;
     public Transform aimPoint;
     public LayerMask collisionLayers;
     private LineRenderer lineRenderer;
 
+    private float _weaponRange = 100f;
     private float _lastFiredTime = 0f;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        _handler = GetComponent<HPHandler>();
         lineRenderer.enabled = false;
+        HitParticle.transform.parent = GameObject.FindWithTag("ParticlePool").transform;   
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(HitParticle.gameObject);
     }
 
     public override void Spawned()
@@ -40,6 +50,7 @@ public class WeaponHandler : NetworkBehaviour
                     OnFireRemote();
                     break;
                 case nameof(HitPosition):
+                    OnHitRemote();
                     break;
             }
         }
@@ -47,6 +58,8 @@ public class WeaponHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (_handler.IsDead) return;
+
         if(GetInput(out NetworkInputData networkInputData))
         {
             if (networkInputData.isFirePressed)
@@ -60,9 +73,9 @@ public class WeaponHandler : NetworkBehaviour
     {
         if (Time.time - _lastFiredTime < 0.15f) return;
 
-        float hitDistance = 100;
+        float hitDistance = _weaponRange;
         bool isHitOnPlayer = false;
-        if (Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, 100,
+        if (Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, _weaponRange,
             Object.InputAuthority, out var hitInfo, collisionLayers, HitOptions.IncludePhysX))
         {
             hitDistance = hitInfo.Distance;
@@ -72,6 +85,10 @@ public class WeaponHandler : NetworkBehaviour
 
         if (hitInfo.Hitbox != null)
         {
+            if (Object.HasStateAuthority)
+            {
+                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage();
+            }
             isHitOnPlayer = true;
         }
         else if(hitInfo.Collider != null)
@@ -90,6 +107,10 @@ public class WeaponHandler : NetworkBehaviour
 
         StartCoroutine(FireEffect());
         StartCoroutine(FireLine());
+
+        HitParticle.transform.position = hitInfo.Point;
+        HitParticle.transform.LookAt(aimPoint.position);
+        HitParticle.Play();
 
         _lastFiredTime = Time.time;
     }
@@ -115,8 +136,19 @@ public class WeaponHandler : NetworkBehaviour
     {
         if (!Object.HasInputAuthority)
         {
+            FireParticle.transform.LookAt(HitPosition);
             FireParticle.Play();
             StartCoroutine(FireLine());
+        }
+    }
+
+    private void OnHitRemote()
+    {
+        if (!Object.HasInputAuthority)
+        {
+            HitParticle.transform.position = HitPosition;
+            HitParticle.transform.LookAt(aimPoint.position);
+            HitParticle.Play();
         }
     }
 }
