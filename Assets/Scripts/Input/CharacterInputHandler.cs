@@ -12,14 +12,13 @@ public class CharacterInputHandler : SimulationBehaviour
     private Vector2 _moveInputVector = Vector2.zero;
     private Vector2 _viewInputVector = Vector2.zero;
     private bool _isJumped;
+    private bool _isFired;
 
     private LocalCameraHandler _localCameraHandler;
-    private PlayerInput _playerInput;
 
     private void Awake()
     {
         _localCameraHandler = GetComponentInChildren<LocalCameraHandler>();
-        _playerInput = GetComponent<PlayerInput>();
     }
 
     void Start()
@@ -62,6 +61,14 @@ public class CharacterInputHandler : SimulationBehaviour
         }
     }
 
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _isFired = true;
+        }
+    }
+
     public NetworkInputData GetNetworkInput()
     {
         NetworkInputData networkInputData = new NetworkInputData();
@@ -69,8 +76,10 @@ public class CharacterInputHandler : SimulationBehaviour
         networkInputData.aimForwardVector = _localCameraHandler.transform.forward;
         networkInputData.movementInput = _moveInputVector;
         networkInputData.isJumpPressed = _isJumped;
+        networkInputData.isFirePressed = _isFired;
 
         _isJumped = false;
+        _isFired = false;
 
         return networkInputData;
     }

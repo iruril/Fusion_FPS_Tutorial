@@ -53,6 +53,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""d624a1c5-c887-4989-a4c4-f0a5d97f173c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -253,6 +262,28 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0c84d55-2507-471a-8c4c-614141360b7a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f58eeca5-9496-47ff-87c1-d9821015f1af"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -297,6 +328,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_PlayerActionMap_Move = m_PlayerActionMap.FindAction("Move", throwIfNotFound: true);
         m_PlayerActionMap_CameraRotation = m_PlayerActionMap.FindAction("CameraRotation", throwIfNotFound: true);
         m_PlayerActionMap_Jump = m_PlayerActionMap.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerActionMap_Fire = m_PlayerActionMap.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -361,6 +393,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActionMap_Move;
     private readonly InputAction m_PlayerActionMap_CameraRotation;
     private readonly InputAction m_PlayerActionMap_Jump;
+    private readonly InputAction m_PlayerActionMap_Fire;
     public struct PlayerActionMapActions
     {
         private @PlayerAction m_Wrapper;
@@ -368,6 +401,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerActionMap_Move;
         public InputAction @CameraRotation => m_Wrapper.m_PlayerActionMap_CameraRotation;
         public InputAction @Jump => m_Wrapper.m_PlayerActionMap_Jump;
+        public InputAction @Fire => m_Wrapper.m_PlayerActionMap_Fire;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -386,6 +420,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
         }
 
         private void UnregisterCallbacks(IPlayerActionMapActions instance)
@@ -399,6 +436,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
         }
 
         public void RemoveCallbacks(IPlayerActionMapActions instance)
@@ -439,5 +479,6 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnCameraRotation(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }
