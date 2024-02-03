@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using UnityEngine.InputSystem;
 
 public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 {
@@ -25,6 +26,9 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
         }
         else
         {
+            PlayerInput playerInput = GetComponent<PlayerInput>();
+            playerInput.enabled = false;
+
             Camera camera = GetComponentInChildren<Camera>();
             camera.enabled = false;
 

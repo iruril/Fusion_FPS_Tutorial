@@ -1103,6 +1103,7 @@ GameObject:
   - component: {fileID: 3662773568233885599}
   - component: {fileID: 279026685068360541}
   - component: {fileID: 363320758652166535}
+  - component: {fileID: 5898834392228538740}
   m_Layer: 0
   m_Name: NetPlayer_Type001
   m_TagString: Untagged
@@ -1240,7 +1241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe21def533965b40816e2df0515d56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camSensetivity: 50
 --- !u!114 &363320758652166535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1253,3 +1253,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c4b65904cd34f4ea59e913a7633c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mouseRotateSpeed: 10
+  _rotateSpeedOnGamepad: 40
+--- !u!114 &5898834392228538740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855329447174113136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 58d5b723631918046b2a980b8c1912e4,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363320758652166535}
+        m_TargetAssemblyTypeName: CharacterInputHandler, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5016c024-e837-4545-a272-d2b0f14e909d
+    m_ActionName: PlayerActionMap/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualSenseGamepadHID/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363320758652166535}
+        m_TargetAssemblyTypeName: CharacterInputHandler, Assembly-CSharp
+        m_MethodName: OnCamRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: db2a660e-faab-47e7-84f0-424320d43604
+    m_ActionName: PlayerActionMap/CameraRotation[/DualSenseGamepadHID/rightStick/up,/DualSenseGamepadHID/rightStick/down,/DualSenseGamepadHID/rightStick/left,/DualSenseGamepadHID/rightStick/right,/Mouse/delta/right,/Mouse/delta/left,/Mouse/delta/up,/Mouse/delta/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363320758652166535}
+        m_TargetAssemblyTypeName: CharacterInputHandler, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8ce4f359-9d29-46db-840a-96c1623ff2fe
+    m_ActionName: PlayerActionMap/Jump[/DualSenseGamepadHID/leftShoulder,/Keyboard/space]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: PlayerActionMap
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
