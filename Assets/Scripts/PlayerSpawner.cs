@@ -6,6 +6,7 @@ using Fusion.Sockets;
 using System;
 
 using Random = UnityEngine.Random;
+using UnityEngine.InputSystem;
 
 public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {

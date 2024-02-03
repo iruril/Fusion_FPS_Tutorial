@@ -28,22 +28,6 @@ public class CharacterInputHandler : SimulationBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
-    {
-        //_viewInputVector.x = Input.GetAxis("Mouse X");
-        //_viewInputVector.y = -Input.GetAxis("Mouse Y");
-
-        //_localCameraHandler.SetViewIputVector(_viewInputVector);
-
-        //_moveInputVector.x = Input.GetAxisRaw("Horizontal");
-        //_moveInputVector.y = Input.GetAxisRaw("Vertical");
-
-        //if (Input.GetButtonDown("Jump"))
-        //{
-        //    _isJumped = true;
-        //}
-    }
-
     public void OnCamRotation(InputAction.CallbackContext context)
     {
         Vector2 inputValues = context.ReadValue<Vector2>();
