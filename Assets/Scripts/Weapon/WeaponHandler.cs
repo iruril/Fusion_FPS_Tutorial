@@ -20,7 +20,8 @@ public class WeaponHandler : NetworkBehaviour
     private LineRenderer lineRenderer;
 
     private float _weaponRange = 100f;
-    private float _lastFiredTime = 0f;
+    private bool _isFiring = false;
+    private float _rateOfFireDelay = 0.08f;
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class WeaponHandler : NetworkBehaviour
 
     private void OnDestroy()
     {
-        Destroy(HitParticle.gameObject);
+        if(HitParticle != null) Destroy(HitParticle.gameObject);
     }
 
     public override void Spawned()
@@ -64,15 +65,30 @@ public class WeaponHandler : NetworkBehaviour
         {
             if (networkInputData.isFirePressed)
             {
-                Fire(networkInputData.aimForwardVector);
+                ShootBullet(networkInputData.aimForwardVector);
+            }
+            else
+            {
+                _isFiring = false;
             }
         }
     }
 
+    private void ShootBullet(Vector3 aimForwardVector)
+    {
+        if (!_isFiring) StartCoroutine(Shoot(aimForwardVector));
+    }
+
+    private IEnumerator Shoot(Vector3 aimForwardVector)
+    {
+        _isFiring = true;
+        Fire(aimForwardVector);
+        yield return new WaitForSeconds(_rateOfFireDelay);
+        _isFiring = false;
+    }
+
     private void Fire(Vector3 aimForwardVector)
     {
-        if (Time.time - _lastFiredTime < 0.15f) return;
-
         float hitDistance = _weaponRange;
         bool isHitOnPlayer = false;
         if (Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, _weaponRange,
@@ -111,8 +127,6 @@ public class WeaponHandler : NetworkBehaviour
         HitParticle.transform.position = hitInfo.Point;
         HitParticle.transform.LookAt(aimPoint.position);
         HitParticle.Play();
-
-        _lastFiredTime = Time.time;
     }
 
     private IEnumerator FireEffect()

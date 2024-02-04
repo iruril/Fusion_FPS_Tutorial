@@ -67,6 +67,10 @@ public class CharacterInputHandler : SimulationBehaviour
         {
             _isFired = true;
         }
+        else
+        {
+            _isFired = false;
+        }
     }
 
     public NetworkInputData GetNetworkInput()
@@ -79,7 +83,7 @@ public class CharacterInputHandler : SimulationBehaviour
         networkInputData.isFirePressed = _isFired;
 
         _isJumped = false;
-        _isFired = false;
+        //_isFired = false;
 
         return networkInputData;
     }
