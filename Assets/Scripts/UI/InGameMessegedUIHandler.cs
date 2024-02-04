@@ -9,11 +9,6 @@ public class InGameMessegedUIHandler : MonoBehaviour
 
     Queue messegeQueue = new Queue();
 
-    void Start()
-    {
-        
-    }
-
     public void OnGameMessegeRecieved(string messege)
     {
         messegeQueue.Enqueue(messege);

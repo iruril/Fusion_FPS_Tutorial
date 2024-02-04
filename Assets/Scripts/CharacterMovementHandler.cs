@@ -7,6 +7,8 @@ public class CharacterMovementHandler : NetworkBehaviour
 {
     private NetworkCharacterController _networkCharacterController;
     private HPHandler _hPHandler;
+    private NetworkInGameMessege _networkInGameMessege;
+    private NetworkPlayer _networkPlayer;
 
     private bool isRespawnReqeusted = false;
     public Vector3 _mySpawnPoint { get; set; }
@@ -15,6 +17,8 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         _networkCharacterController = GetComponent<NetworkCharacterController>();
         _hPHandler = GetComponent<HPHandler>();
+        _networkInGameMessege = GetComponent<NetworkInGameMessege>();
+        _networkPlayer = GetComponent<NetworkPlayer>();
     }
 
     void Start()
@@ -60,6 +64,8 @@ public class CharacterMovementHandler : NetworkBehaviour
         {
             if (Object.HasStateAuthority)
             {
+                //_networkInGameMessege.SendInGameRPCMessege(_networkPlayer.Nickname.ToString(), "Fell of the world");
+                _networkPlayer.RPC_SendMessege(_networkPlayer.Nickname.ToString(), "Fell of the world");
                 Respawn();
             }
         }

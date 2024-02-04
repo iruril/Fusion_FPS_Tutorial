@@ -7,11 +7,6 @@ public class NetworkInGameMessege : MonoBehaviour
 {
     InGameMessegedUIHandler _inGameMessegedUIHandler;
 
-    void Start()
-    {
-        
-    }
-
     public void SendInGameRPCMessege(string userNickname, string messege)
     {
         RPC_InGameMessege($"<b>{userNickname}</b> : {messege}");

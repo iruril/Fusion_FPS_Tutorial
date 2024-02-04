@@ -7,6 +7,7 @@ public class WeaponHandler : NetworkBehaviour
 {
     private ChangeDetector _changeDetector;
     private HPHandler _handler;
+    private NetworkPlayer _networkPlayer;
 
     [Networked]
     public bool IsFiring {  get; set; }
@@ -27,6 +28,7 @@ public class WeaponHandler : NetworkBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         _handler = GetComponent<HPHandler>();
+        _networkPlayer = GetComponent<NetworkPlayer>();
         lineRenderer.enabled = false;
         HitParticle.transform.parent = GameObject.FindWithTag("ParticlePool").transform;   
     }
@@ -49,9 +51,10 @@ public class WeaponHandler : NetworkBehaviour
             {
                 case nameof(IsFiring):
                     OnFireRemote();
+                    OnHitRemote();
                     break;
                 case nameof(HitPosition):
-                    OnHitRemote();
+                    //OnHitRemote();
                     break;
             }
         }
@@ -104,7 +107,7 @@ public class WeaponHandler : NetworkBehaviour
         {
             if (Object.HasStateAuthority && hitInfo.Hitbox.transform.root != this.transform)
             {
-                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage();
+                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(_networkPlayer.Nickname.ToString());
             }
             isHitOnPlayer = true;
         }

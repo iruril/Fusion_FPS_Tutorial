@@ -5,7 +5,6 @@ using Fusion;
 using UnityEngine.InputSystem;
 using TMPro;
 using System;
-using UnityEngine.SocialPlatforms;
 
 public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 {
@@ -115,5 +114,11 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
             _networkInGameMessege.SendInGameRPCMessege(nickName, "Has Joined!");
             _isPublicJoinMessegeSent = true;
         }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_SendMessege(string nickName, string messege, RpcInfo rpcInfo = default)
+    {
+        _networkInGameMessege.SendInGameRPCMessege(nickName, messege);
     }
 }
