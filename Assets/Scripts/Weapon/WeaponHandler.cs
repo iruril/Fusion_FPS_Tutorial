@@ -89,6 +89,7 @@ public class WeaponHandler : NetworkBehaviour
 
     private void Fire(Vector3 aimForwardVector)
     {
+        IsFiring = true;
         float hitDistance = _weaponRange;
         bool isHitOnPlayer = false;
         if (Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, _weaponRange,
@@ -101,7 +102,7 @@ public class WeaponHandler : NetworkBehaviour
 
         if (hitInfo.Hitbox != null)
         {
-            if (Object.HasStateAuthority)
+            if (Object.HasStateAuthority && hitInfo.Hitbox.transform.root != this.transform)
             {
                 hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage();
             }
@@ -131,9 +132,8 @@ public class WeaponHandler : NetworkBehaviour
 
     private IEnumerator FireEffect()
     {
-        IsFiring = true;
         FireParticle.Play();
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(_rateOfFireDelay);
         IsFiring = false;
     }
 

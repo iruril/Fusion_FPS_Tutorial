@@ -59,6 +59,10 @@ public class CharacterInputHandler : SimulationBehaviour
         {
             _isJumped = true;
         }
+        else
+        {
+            _isJumped = false;
+        }
     }
 
     public void OnFire(InputAction.CallbackContext context)
@@ -81,9 +85,6 @@ public class CharacterInputHandler : SimulationBehaviour
         networkInputData.movementInput = _moveInputVector;
         networkInputData.isJumpPressed = _isJumped;
         networkInputData.isFirePressed = _isFired;
-
-        _isJumped = false;
-        //_isFired = false;
 
         return networkInputData;
     }
