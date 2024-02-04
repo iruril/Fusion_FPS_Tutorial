@@ -17,6 +17,7 @@ public static class Utils
         transform.gameObject.layer = layerIndex;
         foreach (var item in transform.GetComponentsInChildren<Transform>())
         {
+            if (item.gameObject.layer == LayerMask.NameToLayer("GunModel")) continue;
             item.gameObject.layer = layerIndex;
         }
     }
