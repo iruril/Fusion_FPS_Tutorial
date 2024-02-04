@@ -45,17 +45,22 @@ public class WeaponHandler : NetworkBehaviour
 
     public override void Render()
     {
-        foreach (var change in _changeDetector.DetectChanges(this))
+        if (!Object.HasInputAuthority)
         {
-            switch (change)
+            foreach (var change in _changeDetector.DetectChanges(this))
             {
-                case nameof(IsFiring):
-                    OnFireRemote();
-                    OnHitRemote();
-                    break;
-                case nameof(HitPosition):
-                    //OnHitRemote();
-                    break;
+                switch (change)
+                {
+                    case nameof(IsFiring):
+                        break;
+                    case nameof(HitPosition):
+                        break;
+                }
+            }
+
+            if (IsFiring)
+            {
+                OnShootBulletRemote();
             }
         }
     }
@@ -149,23 +154,31 @@ public class WeaponHandler : NetworkBehaviour
         lineRenderer.enabled = false;
     }
 
+    private void OnShootBulletRemote()
+    {
+        if (!_isFiring) StartCoroutine(OnShootRemote());
+    }
+
+    private IEnumerator OnShootRemote()
+    {
+        _isFiring = true;
+        OnFireRemote();
+        OnHitRemote();
+        yield return new WaitForSeconds(_rateOfFireDelay);
+        _isFiring = false;
+    }
+
     private void OnFireRemote()
     {
-        if (!Object.HasInputAuthority)
-        {
-            FireParticle.transform.LookAt(HitPosition);
-            FireParticle.Play();
-            StartCoroutine(FireLine());
-        }
+        FireParticle.transform.LookAt(HitPosition);
+        FireParticle.Play();
+        StartCoroutine(FireLine());
     }
 
     private void OnHitRemote()
     {
-        if (!Object.HasInputAuthority)
-        {
-            HitParticle.transform.position = HitPosition;
-            HitParticle.transform.LookAt(aimPoint.position);
-            HitParticle.Play();
-        }
+        HitParticle.transform.position = HitPosition;
+        HitParticle.transform.LookAt(aimPoint.position);
+        HitParticle.Play();
     }
 }
