@@ -13,14 +13,16 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
     public static NetworkPlayer LocalPlayer { get; set; }
     public Transform PlayerBody;
     public TextMeshProUGUI PlayerNickname;
-
+    
+    [Networked]
+    public int token { get; set; }
     [Networked]
     public NetworkString<_16> Nickname { get; set; }
 
     private bool _isPublicJoinMessegeSent = false;
     private NetworkInGameMessege _networkInGameMessege;
 
-    public LocalCameraHandler LocalCameraHandler;
+    public LocalCameraHandler MyLocalCameraHandler;
     public GameObject localUI;
 
     private void Awake()
@@ -41,14 +43,28 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
         {
             LocalPlayer = this;
             Utils.SerRenderLayerInChildren(PlayerBody, LayerMask.NameToLayer("LocalPlayerModel"));
-            Camera.main.gameObject.SetActive(false);
 
-            RPC_SetNickname(PlayerPrefs.GetString("PlayerNickname"));
+            if (Camera.main != null)
+            {
+                Camera.main.gameObject.SetActive(false);
+            }
+
+            AudioListener listener = GetComponentInChildren<AudioListener>(true);
+            listener.enabled = true;
+
+            MyLocalCameraHandler.LocalCamera.enabled = true;
+            MyLocalCameraHandler.LocalCamera.transform.parent = null;
+            localUI.SetActive(true);
+
+            RPC_SetNickname(GameManager.Instance.playerNickname);
 
             Debug.Log("로컬 플레이어 생성!");
         }
         else
         {
+            MyLocalCameraHandler.LocalCamera.enabled = false;
+            localUI.SetActive(false);
+
             PlayerInput playerInput = GetComponent<PlayerInput>();
             playerInput.enabled = false;
 
@@ -57,8 +73,6 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 
             AudioListener listener = GetComponentInChildren<AudioListener>();
             listener.enabled = false;
-
-            localUI.SetActive(false);
 
             Debug.Log("원격 플레이어 생성!");
         }
@@ -71,6 +85,14 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
         _networkInGameMessege.SendInGameRPCMessege(Nickname.ToString(), "Has Left!");
+    }
+
+    private void OnDestroy()
+    {
+        if(MyLocalCameraHandler != null)
+        {
+            Destroy(MyLocalCameraHandler.gameObject);
+        }
     }
 
     public override void Render()

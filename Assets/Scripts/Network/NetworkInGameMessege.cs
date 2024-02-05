@@ -17,7 +17,7 @@ public class NetworkInGameMessege : MonoBehaviour
     {
         if(_inGameMessegedUIHandler == null)
         {
-            _inGameMessegedUIHandler = NetworkPlayer.LocalPlayer.LocalCameraHandler.GetComponentInChildren<InGameMessegedUIHandler>();
+            _inGameMessegedUIHandler = NetworkPlayer.LocalPlayer.MyLocalCameraHandler.GetComponentInChildren<InGameMessegedUIHandler>();
         }
 
         if (_inGameMessegedUIHandler != null)

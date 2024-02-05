@@ -32,6 +32,8 @@ public class MainMenuUIHandler : MonoBehaviour
         }
         PlayerPrefs.Save();
 
+        GameManager.Instance.playerNickname = InputField.text;
+
         SceneManager.LoadScene("MainScene");
     }
 

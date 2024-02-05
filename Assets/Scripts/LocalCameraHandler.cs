@@ -6,7 +6,7 @@ using UnityEngine;
 public class LocalCameraHandler : MonoBehaviour
 {
     public Transform CamAnchoredPoint;
-    private Camera localCamera;
+    public Camera LocalCamera;
     private NetworkCharacterController _networkCharacterController;
 
     private Vector2 viewInput = Vector2.zero;
@@ -16,35 +16,42 @@ public class LocalCameraHandler : MonoBehaviour
 
     private void Awake()
     {
-        localCamera = GetComponent<Camera>();
+        LocalCamera = GetComponent<Camera>();
         _networkCharacterController = GetComponentInParent<NetworkCharacterController>();
     }
 
     void Start()
     {
-        if (localCamera.enabled)
-        {
-            localCamera.transform.parent = null;
-        }
+        camRotationX = GameManager.Instance.cameraViewRotation.x;
+        camRotationY = GameManager.Instance.cameraViewRotation.y;
     }
 
     void LateUpdate()
     {
         if (CamAnchoredPoint == null) return;
-        if (!localCamera.enabled) return;
+        if (!LocalCamera.enabled) return;
 
-        localCamera.transform.position = CamAnchoredPoint.position;
+        LocalCamera.transform.position = CamAnchoredPoint.position;
 
         camRotationX += viewInput.y * Time.deltaTime * _networkCharacterController.viewUpDownRotationSpeed;
         camRotationX = Mathf.Clamp(camRotationX, -90, 90);
 
         camRotationY += viewInput.x * Time.deltaTime * _networkCharacterController.rotationSpeed;
 
-        localCamera.transform.rotation = Quaternion.Euler(camRotationX, camRotationY, 0);
+        LocalCamera.transform.rotation = Quaternion.Euler(camRotationX, camRotationY, 0);
     }
 
     public void SetViewIputVector(Vector2 input)
     {
         this.viewInput = input;
+    }
+
+    private void OnDestroy()
+    {
+        if(camRotationX != 0 && camRotationY != 0)
+        {
+            GameManager.Instance.cameraViewRotation.x = camRotationX;
+            GameManager.Instance.cameraViewRotation.y = camRotationY;
+        }
     }
 }

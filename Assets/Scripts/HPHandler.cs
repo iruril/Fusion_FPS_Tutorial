@@ -22,6 +22,8 @@ public class HPHandler : NetworkBehaviour
     public GameObject PlayerModel;
     public GameObject DeathGameObjectPrefab;
 
+    public bool skipSettingStartingValue = false;
+
     private HitboxRoot hitboxRoot;
     private CharacterMovementHandler characterMovementHandler;
     private NetworkPlayer _networkPlayer;
@@ -40,8 +42,11 @@ public class HPHandler : NetworkBehaviour
 
     void Start()
     {
-        HP = _startHP;
-        IsDead = false;
+        if (!skipSettingStartingValue)
+        {
+            HP = _startHP;
+            IsDead = false;
+        }
         //_isInitialized = true;
     }
 
