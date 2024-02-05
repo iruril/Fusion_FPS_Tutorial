@@ -24,7 +24,6 @@ public class HPHandler : NetworkBehaviour
 
     private HitboxRoot hitboxRoot;
     private CharacterMovementHandler characterMovementHandler;
-    private NetworkInGameMessege _networkInGameMessege;
     private NetworkPlayer _networkPlayer;
 
     public override void Spawned()
@@ -36,7 +35,6 @@ public class HPHandler : NetworkBehaviour
     {
         characterMovementHandler = GetComponent<CharacterMovementHandler>();
         hitboxRoot = GetComponent<HitboxRoot>();
-        _networkInGameMessege = GetComponent<NetworkInGameMessege>();
         _networkPlayer = GetComponent<NetworkPlayer>();
     }
 
@@ -84,7 +82,6 @@ public class HPHandler : NetworkBehaviour
 
         if(HP <= 0)
         {
-            //_networkInGameMessege.SendInGameRPCMessege(damageDealer, $"Killed <b>{_networkPlayer.Nickname.ToString()}</b>");
             _networkPlayer.RPC_SendMessege(damageDealer, $"Killed <b>{_networkPlayer.Nickname.ToString()}</b>");
 
             StartCoroutine(OnDeadCoroutine());
