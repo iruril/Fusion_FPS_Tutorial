@@ -21,6 +21,7 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 
     private bool _isPublicJoinMessegeSent = false;
     private NetworkInGameMessege _networkInGameMessege;
+    private PlayerInput _playerInput;
 
     public LocalCameraHandler MyLocalCameraHandler;
     public GameObject localUI;
@@ -28,6 +29,7 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
     private void Awake()
     {
         _networkInGameMessege = GetComponent<NetworkInGameMessege>();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     void Start()
@@ -49,11 +51,10 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
                 Camera.main.gameObject.SetActive(false);
             }
 
-            PlayerInput playerInput = GetComponent<PlayerInput>();
-            playerInput.enabled = true;
-
             AudioListener listener = GetComponentInChildren<AudioListener>(true);
             listener.enabled = true;
+
+            _playerInput.enabled = true;
 
             MyLocalCameraHandler.LocalCamera.enabled = true;
             MyLocalCameraHandler.LocalCamera.transform.parent = null;
@@ -68,14 +69,13 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
             MyLocalCameraHandler.LocalCamera.enabled = false;
             localUI.SetActive(false);
 
-            PlayerInput playerInput = GetComponent<PlayerInput>();
-            playerInput.enabled = false;
-
             Camera camera = GetComponentInChildren<Camera>();
             camera.enabled = false;
 
             AudioListener listener = GetComponentInChildren<AudioListener>();
             listener.enabled = false;
+
+            _playerInput.enabled = false;
 
             Debug.Log("원격 플레이어 생성!");
         }
@@ -110,9 +110,21 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
             }
         }
 
-        if(PlayerNickname.text != Nickname.ToString())
+        if (PlayerNickname.text != Nickname.ToString())
         {
             OnNicknameChanged();
+        }
+
+        if (Object.HasInputAuthority) OnPlayerInputInitialize();
+    }
+
+    private void OnPlayerInputInitialize()
+    {
+        if (_playerInput.devices.Count == 0)
+        {
+            Debug.Log("PlayerInput Re-Initialize!");
+            _playerInput.enabled = false;
+            _playerInput.enabled = true;
         }
     }
 

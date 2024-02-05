@@ -29,6 +29,7 @@ public class CharacterInputHandler : SimulationBehaviour
 
     public void OnCamRotation(InputAction.CallbackContext context)
     {
+        if (Object != null && !Object.HasInputAuthority) return;
         Vector2 inputValues = context.ReadValue<Vector2>();
         float sensitivity;
         if (context.control.device is Mouse)
@@ -50,11 +51,13 @@ public class CharacterInputHandler : SimulationBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (Object != null && !Object.HasInputAuthority) return;
         _moveInputVector = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (Object != null && !Object.HasInputAuthority) return;
         if (context.performed)
         {
             _isJumped = true;
@@ -67,6 +70,7 @@ public class CharacterInputHandler : SimulationBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        if (Object != null && !Object.HasInputAuthority) return;
         if (context.performed)
         {
             _isFired = true;
