@@ -5,17 +5,20 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 
-using Random = UnityEngine.Random;
-using UnityEngine.InputSystem;
-
 public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     public NetworkPlayer playerPrefab;
 
     private CharacterInputHandler characterInputHandler;
-    private Dictionary<int, NetworkPlayer> mapTokenIDWithPlayer = new Dictionary<int, NetworkPlayer>();
+    private Dictionary<int, NetworkPlayer> mapTokenIDWithPlayer;
+    public List<NetworkPlayer> networkPlayers = new();
 
-    private int GetplayerToken(NetworkRunner runner, PlayerRef player)
+    private void Awake()
+    {
+        mapTokenIDWithPlayer = new Dictionary<int, NetworkPlayer>();
+    }
+
+    private int GetPlayerToken(NetworkRunner runner, PlayerRef player)
     {
         if(runner.LocalPlayer == player)
         {
@@ -37,6 +40,8 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void SetConnectionTokenMapping(int token, NetworkPlayer player)
     {
         mapTokenIDWithPlayer.Add(token, player);
+        networkPlayers.Add(player);
+        Debug.Log("Connection Token : " + token + ", " + player.Nickname + " Added.");
     }
 
     public void OnHostMigrationCleanUP()
@@ -47,9 +52,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
             if (objectInMap.InputAuthority.IsNone)
             {
-                int key = item.Key;
                 objectInMap.Runner.Despawn(objectInMap);
-                mapTokenIDWithPlayer.Remove(key);
             }
         }
     }
@@ -77,6 +80,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
+        Debug.Log("OnHostMigration");
         await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
 
         FindObjectOfType<NetworkRunnerHandler>().StartHostMigration(hostMigrationToken);
@@ -111,16 +115,17 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            int token = GetplayerToken(runner, player);
+            int token = GetPlayerToken(runner, player);
 
-            if(mapTokenIDWithPlayer.TryGetValue(token, out var networkPlayer))
+            if(mapTokenIDWithPlayer.TryGetValue(token, out NetworkPlayer networkPlayer))
             {
+                Debug.Log($"Found old connection token for token {token}. Assigning controls to that player.");
                 networkPlayer.GetComponent<NetworkObject>().AssignInputAuthority(player);
                 networkPlayer.Spawned();
             }
             else
             {
-                Debug.Log("[플레이어 입장] : 우리는 서버입니다. 유저를 생성합니다.");
+                Debug.Log($"[Player Entered] : We are Server. Generates User by token {token}.");
                 Vector3 spawnPoint = Utils.GetRandom2X2PositionByVector3(transform.position);
                 NetworkPlayer netPlayerObject = runner.Spawn(playerPrefab, spawnPoint, Quaternion.identity, player);
                 if (netPlayerObject.TryGetComponent<CharacterMovementHandler>(out var movementHandler))
@@ -134,7 +139,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
         else
         {
-            Debug.Log("[플레이어 입장]");
+            Debug.Log("[Player Entered]");
         }
     }
 
@@ -170,9 +175,4 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
     }
     #endregion
-
-    void Start()
-    {
-        
-    }
 }

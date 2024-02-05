@@ -749,6 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CamAnchoredPoint: {fileID: 5773677960794982015}
+  LocalCamera: {fileID: 0}
 --- !u!1 &5805370811614366058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,11 +1463,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerBody: {fileID: 378653442999499621}
   PlayerNickname: {fileID: 4536227327312360295}
+  _token: 0
   _Nickname:
     _length: 0
     _data:
       Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  LocalCameraHandler: {fileID: 5078752686064738123}
+  MyLocalCameraHandler: {fileID: 5078752686064738123}
   localUI: {fileID: 7647302544517577902}
 --- !u!114 &116347449203547007
 MonoBehaviour:
@@ -1715,6 +1717,7 @@ MonoBehaviour:
   PlayerModel: {fileID: 8724464777968193951}
   DeathGameObjectPrefab: {fileID: 2283229683088611668, guid: 51966cf5287d989478276b02a463b117,
     type: 3}
+  skipSettingStartingValue: 0
 --- !u!120 &8218893783291610220
 LineRenderer:
   serializedVersion: 2

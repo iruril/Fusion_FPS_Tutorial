@@ -10,6 +10,8 @@ public class CharacterMovementHandler : NetworkBehaviour
     private NetworkPlayer _networkPlayer;
 
     private bool isRespawnReqeusted = false;
+
+    [Networked]
     public Vector3 _mySpawnPoint { get; set; }
 
     private void Awake()

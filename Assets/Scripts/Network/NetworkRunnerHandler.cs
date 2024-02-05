@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class NetworkRunnerHandler : MonoBehaviour
 {
@@ -26,7 +25,7 @@ public class NetworkRunnerHandler : MonoBehaviour
             NetAddress.Any(),
             SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex),
             null);
-        Debug.Log($"[서버] 네트워크 러너가 시작되었습니다.");
+        Debug.Log($"[Server] NetworkRunner Started.");
     }
 
     public void StartHostMigration(HostMigrationToken hostMigrationToken)
@@ -35,6 +34,7 @@ public class NetworkRunnerHandler : MonoBehaviour
         _myNetworkRunner.name = "Network runner - Migrated";
 
         var clientTask = InitializeNetworkRunnerHostMigration(_myNetworkRunner, hostMigrationToken);
+        Debug.Log($"[Server] NetworkRunner - Host Migration Started.");
     }
 
     INetworkSceneManager GetSceneManager(NetworkRunner runner)
@@ -86,9 +86,9 @@ public class NetworkRunnerHandler : MonoBehaviour
     {
         foreach(var item in runner.GetResumeSnapshotNetworkObjects())
         {
-            if(item.TryGetComponent<NetworkCharacterController>(out var kcc))
+            if(item.TryGetBehaviour<NetworkCharacterController>(out var kcc))
             {
-                runner.Spawn(item, kcc.transform.position, kcc.transform.rotation, onBeforeSpawned: (runner, newNetworkObject) =>
+                runner.Spawn(item, kcc.Data.Position, kcc.Data.Rotation, onBeforeSpawned: (runner, newNetworkObject) =>
                 {
                     newNetworkObject.CopyStateFrom(item);
 
@@ -104,7 +104,7 @@ public class NetworkRunnerHandler : MonoBehaviour
                         FindObjectOfType<PlayerSpawner>().SetConnectionTokenMapping
                         (
                             oldNetworkPlayer.token,
-                            oldNetworkPlayer.GetComponent<NetworkPlayer>()
+                            newNetworkObject.GetComponent<NetworkPlayer>()
                         );
                     }
                 });
@@ -116,7 +116,7 @@ public class NetworkRunnerHandler : MonoBehaviour
 
     private IEnumerator CleanUpHostMigration()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5.0f);
         FindAnyObjectByType<PlayerSpawner>().OnHostMigrationCleanUP();
     }
 }

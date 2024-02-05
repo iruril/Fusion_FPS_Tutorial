@@ -49,6 +49,9 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
                 Camera.main.gameObject.SetActive(false);
             }
 
+            PlayerInput playerInput = GetComponent<PlayerInput>();
+            playerInput.enabled = true;
+
             AudioListener listener = GetComponentInChildren<AudioListener>(true);
             listener.enabled = true;
 
