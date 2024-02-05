@@ -14,7 +14,7 @@ public class HPHandler : NetworkBehaviour
     public bool IsDead { get; set; }
 
     private const byte _startHP = 5;
-    private bool _isInitialized = false;
+    //private bool _isInitialized = false;
 
     public Color ColorOnHit;
     public Image OnHitImage;
@@ -44,7 +44,7 @@ public class HPHandler : NetworkBehaviour
     {
         HP = _startHP;
         IsDead = false;
-        _isInitialized = true;
+        //_isInitialized = true;
     }
 
     private IEnumerator OnHitEffect()

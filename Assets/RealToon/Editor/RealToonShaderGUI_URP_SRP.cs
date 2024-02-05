@@ -64,7 +64,7 @@ static bool twofourfive_target = false;
 static string twofourfive_target_string = "Change shader compilation target to 4.5";
 
 static bool dots_lbs_cd = false;
-static string dots_lbs_cd_string = "DOTS|HR - Use Compute Deformation";
+//static string dots_lbs_cd_string = "DOTS|HR - Use Compute Deformation";
 
         #endregion
 
