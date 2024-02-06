@@ -13,6 +13,7 @@ public class CharacterInputHandler : SimulationBehaviour
     private Vector2 _viewInputVector = Vector2.zero;
     private bool _isJumped;
     private bool _isFired;
+    private bool _isGrenade;
 
     private LocalCameraHandler _localCameraHandler;
 
@@ -81,6 +82,19 @@ public class CharacterInputHandler : SimulationBehaviour
         }
     }
 
+    public void OnGrenade(InputAction.CallbackContext context)
+    {
+        if (Object != null && !Object.HasInputAuthority) return;
+        if (context.performed)
+        {
+            _isGrenade = true;
+        }
+        else
+        {
+            _isGrenade = false;
+        }
+    }
+
     public NetworkInputData GetNetworkInput()
     {
         NetworkInputData networkInputData = new NetworkInputData();
@@ -89,6 +103,7 @@ public class CharacterInputHandler : SimulationBehaviour
         networkInputData.movementInput = _moveInputVector;
         networkInputData.isJumpPressed = _isJumped;
         networkInputData.isFirePressed = _isFired;
+        networkInputData.isGrenadePressed = _isGrenade;
 
         return networkInputData;
     }
