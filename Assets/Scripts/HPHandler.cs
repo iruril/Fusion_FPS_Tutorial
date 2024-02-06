@@ -13,7 +13,7 @@ public class HPHandler : NetworkBehaviour
     [Networked]
     public bool IsDead { get; set; }
 
-    private const byte _startHP = 5;
+    private const byte _startHP = 100;
     //private bool _isInitialized = false;
 
     public Color ColorOnHit;
@@ -79,11 +79,11 @@ public class HPHandler : NetworkBehaviour
         }
     }
 
-    public void OnTakeDamage(string damageDealer)
+    public void OnTakeDamage(string damageDealer, byte damage)
     {
         if(IsDead) return;
 
-        HP -= 1;
+        HP -= damage;
 
         if(HP <= 0)
         {

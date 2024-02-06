@@ -1551,6 +1551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe21def533965b40816e2df0515d56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  __mySpawnPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &363320758652166535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1655,6 +1656,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d624a1c5-c887-4989-a4c4-f0a5d97f173c
     m_ActionName: PlayerActionMap/Fire[/Mouse/leftButton,/DualSenseGamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363320758652166535}
+        m_TargetAssemblyTypeName: CharacterInputHandler, Assembly-CSharp
+        m_MethodName: OnGrenade
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d07c982a-3de9-4615-a042-9e14d81af2b4
+    m_ActionName: PlayerActionMap/Grenade[/Keyboard/g,/DualSenseGamepadHID/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerActionMap
@@ -1672,6 +1689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535c0857eea591d449f62e1ac4661d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RocketPrefab: {fileID: 4976098900019651539, guid: 1f715154245dfdd4da714d759e2201de,
+    type: 3}
   _IsFiring: 0
   _HitPosition: {x: 0, y: 0, z: 0}
   FireParticle: {fileID: 37609648330671113}

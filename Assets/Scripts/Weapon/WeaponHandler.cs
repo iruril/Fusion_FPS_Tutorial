@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using System;
 
 public class WeaponHandler : NetworkBehaviour
 {
+    public RocketHandler RocketPrefab;
+
     private ChangeDetector _changeDetector;
     private HPHandler _handler;
     private NetworkPlayer _networkPlayer;
+    private NetworkObject _networkObject;
 
     [Networked]
     public bool IsFiring {  get; set; }
@@ -24,13 +28,16 @@ public class WeaponHandler : NetworkBehaviour
     private bool _isFiring = false;
     private float _rateOfFireDelay = 0.08f;
 
+    private TickTimer _rocketFireDelay = TickTimer.None;
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         _handler = GetComponent<HPHandler>();
         _networkPlayer = GetComponent<NetworkPlayer>();
+        _networkObject = GetComponent<NetworkObject>();
         lineRenderer.enabled = false;
-        HitParticle.transform.parent = GameObject.FindWithTag("ParticlePool").transform;   
+        HitParticle.transform.parent = GameObject.FindWithTag("ParticlePool").transform;
     }
 
     private void OnDestroy()
@@ -79,6 +86,34 @@ public class WeaponHandler : NetworkBehaviour
             {
                 _isFiring = false;
             }
+
+            if (networkInputData.isGrenadePressed)
+            {
+                FireRocket(networkInputData.aimForwardVector);
+            }
+        }
+    }
+
+    private void FireRocket(Vector3 aimForwardVector)
+    {
+        if (_rocketFireDelay.ExpiredOrNotRunning(Runner))
+        {
+            Runner.Spawn
+            (
+                RocketPrefab,
+                aimPoint.position + aimForwardVector * 1.5f,
+                Quaternion.LookRotation(aimForwardVector),
+                Object.InputAuthority,
+                (runner, spawnedRocket) =>
+                {
+                    spawnedRocket.GetComponent<RocketHandler>().Fire(
+                        Object.InputAuthority,
+                        _networkObject,
+                        _networkPlayer.Nickname.ToString());
+                }
+            );
+
+            _rocketFireDelay = TickTimer.CreateFromSeconds(Runner, 5.0f);
         }
     }
 
@@ -112,7 +147,7 @@ public class WeaponHandler : NetworkBehaviour
         {
             if (Object.HasStateAuthority && hitInfo.Hitbox.transform.root != this.transform)
             {
-                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(_networkPlayer.Nickname.ToString());
+                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(_networkPlayer.Nickname.ToString(), 20);
             }
             isHitOnPlayer = true;
         }
