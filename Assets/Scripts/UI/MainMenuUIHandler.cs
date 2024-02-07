@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
-using System;
 using UnityEngine.SceneManagement;
 
 public class MainMenuUIHandler : MonoBehaviour
 {
     public TMP_InputField InputField;
+    public TMP_InputField sessionNameInputField;
+
+    public GameObject playerDetails;
+    public GameObject sessonBrowser;
+    public GameObject createSession;
+    public GameObject status;
 
     void Start()
     {
@@ -19,9 +23,17 @@ public class MainMenuUIHandler : MonoBehaviour
         
     }
 
-    public void OnJoinedGameClicked()
+    private void HideAllPanels()
     {
-        string nickName = GetRemoveWhiteSpaces(InputField.text);
+        playerDetails.SetActive(false);
+        sessonBrowser.SetActive(false);
+        createSession.SetActive(false);
+        status.SetActive(false);
+    }
+
+    public void OnFindGameClicked()
+    {
+        string nickName = InputField.text;
         if (nickName != string.Empty)
         {
             PlayerPrefs.SetString("PlayerNickname", InputField.text);
@@ -34,11 +46,33 @@ public class MainMenuUIHandler : MonoBehaviour
 
         GameManager.Instance.playerNickname = InputField.text;
 
-        SceneManager.LoadScene("MainScene");
+        NetworkRunnerHandler networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+        networkRunnerHandler.OnJoinLobby();
+
+        HideAllPanels();
+        sessonBrowser.SetActive(true);
+
+        FindObjectOfType<SessionListUIHandler>(true).OnLookingForSession();
     }
 
-    public string GetRemoveWhiteSpaces(string str)
+    public void OnCreateNewGameClicked()
     {
-        return string.Concat(str.Where(c => !Char.IsWhiteSpace(c)));
+        HideAllPanels();
+        createSession.SetActive(true);
+    }
+
+    public void OnStartNewSessionClicked()
+    {
+        NetworkRunnerHandler netRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+
+        netRunnerHandler.CreateSession(sessionNameInputField.text, "MainScene");
+        HideAllPanels();
+        status.SetActive(true);
+    }
+
+    public void OnJoiningSession()
+    {
+        HideAllPanels();
+        status.SetActive(true);
     }
 }

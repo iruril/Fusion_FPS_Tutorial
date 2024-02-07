@@ -10,12 +10,14 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkPlayer playerPrefab;
 
     private CharacterInputHandler characterInputHandler;
+    private SessionListUIHandler sessionListUIHandler;
     private Dictionary<int, NetworkPlayer> mapTokenIDWithPlayer;
     public List<NetworkPlayer> networkPlayers = new();
 
     private void Awake()
     {
         mapTokenIDWithPlayer = new Dictionary<int, NetworkPlayer>();
+        sessionListUIHandler = FindObjectOfType<SessionListUIHandler>(true);
     }
 
     private int GetPlayerToken(NetworkRunner runner, PlayerRef player)
@@ -165,6 +167,21 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
+        if (sessionListUIHandler == null) return;
+        if(sessionList.Count == 0)
+        {
+            Debug.Log("No Sessions Found!");
+            sessionListUIHandler.OnFoundSessionFailed();
+        }
+        else
+        {
+            sessionListUIHandler.ClearList();
+            foreach(var item in sessionList)
+            {
+                sessionListUIHandler.AddToList(item);
+                Debug.Log($"Session Named {item.Name} / PlayerCount {item.PlayerCount} Found, And Added on List.");
+            }
+        }
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
