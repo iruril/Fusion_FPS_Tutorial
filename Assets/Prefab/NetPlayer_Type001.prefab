@@ -243,7 +243,7 @@ MonoBehaviour:
   Type: 1
   SphereRadius: 0
   CapsuleRadius: 0
-  BoxExtents: {x: 0.2, y: 0.6, z: 0.2}
+  BoxExtents: {x: 0.25, y: 0.6, z: 0.25}
   CapsuleExtents: 0
   Offset: {x: 0, y: 0.6, z: 0}
   Root: {fileID: 6871565884076811583}
@@ -1392,6 +1392,7 @@ GameObject:
   - component: {fileID: 2642894034398319869}
   - component: {fileID: -6755812762144633259}
   - component: {fileID: 116347449203547007}
+  - component: {fileID: -5904629202572257280}
   - component: {fileID: 2576138975466043033}
   - component: {fileID: 3662773568233885599}
   - component: {fileID: 279026685068360541}
@@ -1438,7 +1439,7 @@ Animator:
   m_GameObject: {fileID: 8855329447174113136}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6c8bd974b9d75394dbe398ce2e3b6cac, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8cc72fc9ee2599a45a5cac400e9ebbb9, type: 2}
+  m_Controller: {fileID: 9100000, guid: ab618faa7d1009d4cac27ddfcb4b8803, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1488,11 +1489,30 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -6755812762144633259}
+  - {fileID: -5904629202572257280}
   - {fileID: 3662773568233885599}
   - {fileID: 279026685068360541}
   - {fileID: 4355526819297081551}
   - {fileID: 6871565884076811583}
   - {fileID: 1223816222209674458}
+--- !u!114 &-5904629202572257280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855329447174113136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 2642894034398319869}
+  TotalWords: 5
+  ApplyTiming: 2
+  SyncSettings: -1
+  StateHashes: 0000000046980c4f14c2736628a981077af3fe2e
+  TriggerHashes: 0000000028a98107
 --- !u!143 &2576138975466043033
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1566,6 +1586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouseRotateSpeed: 10
   _rotateSpeedOnGamepad: 40
+  MoveInputVector: {x: 0, y: 0}
 --- !u!114 &5898834392228538740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,7 +1733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: -1
-  BroadRadius: 0.66332495
+  BroadRadius: 0.6964194
   Offset: {x: 0, y: 0.6, z: 0}
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
@@ -1934,17 +1955,17 @@ PrefabInstance:
     - target: {fileID: 6503446643013933061, guid: e47c44ee15e836843975fef74ca41c30,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6503446643013933061, guid: e47c44ee15e836843975fef74ca41c30,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6503446643013933061, guid: e47c44ee15e836843975fef74ca41c30,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.84
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6503446643013933061, guid: e47c44ee15e836843975fef74ca41c30,
         type: 3}

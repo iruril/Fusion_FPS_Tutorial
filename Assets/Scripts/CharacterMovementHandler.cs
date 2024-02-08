@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using System.Diagnostics;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
     private NetworkCharacterController _networkCharacterController;
+    private Animator _animator;
     private HPHandler _hPHandler;
     private NetworkPlayer _networkPlayer;
 
@@ -17,6 +19,7 @@ public class CharacterMovementHandler : NetworkBehaviour
     private void Awake()
     {
         _networkCharacterController = GetComponent<NetworkCharacterController>();
+        _animator = GetComponent<Animator>();
         _hPHandler = GetComponent<HPHandler>();
         _networkPlayer = GetComponent<NetworkPlayer>();
     }
@@ -47,11 +50,15 @@ public class CharacterMovementHandler : NetworkBehaviour
             Vector3 moveDirection = transform.forward * inputData.movementInput.y + transform.right * inputData.movementInput.x; ;
             moveDirection.Normalize();
 
+            _animator.SetFloat("XVelocity", inputData.movementInput.x);
+            _animator.SetFloat("YVelocity", inputData.movementInput.y);
+
             _networkCharacterController.Move(moveDirection);
 
             if (inputData.isJumpPressed)
             {
                 _networkCharacterController.Jump();
+                StartCoroutine(DoJump());
             }
 
             CheckFallRespawn();
@@ -68,6 +75,13 @@ public class CharacterMovementHandler : NetworkBehaviour
                 Respawn();
             }
         }
+    }
+
+    private IEnumerator DoJump()
+    {
+        _animator.SetTrigger("Jump");
+        yield return new WaitForSeconds(0.1f);
+        _animator.ResetTrigger("Jump");
     }
 
     public void RequestRespawn()

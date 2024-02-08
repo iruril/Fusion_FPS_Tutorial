@@ -9,7 +9,7 @@ public class CharacterInputHandler : SimulationBehaviour
     [SerializeField][Range(0, 100)] private float _mouseRotateSpeed = 1.0f;
     [SerializeField][Range(0, 100)] private float _rotateSpeedOnGamepad = 1.0f;
 
-    private Vector2 _moveInputVector = Vector2.zero;
+    public Vector2 MoveInputVector = Vector2.zero;
     private Vector2 _viewInputVector = Vector2.zero;
     private bool _isJumped;
     private bool _isFired;
@@ -53,7 +53,7 @@ public class CharacterInputHandler : SimulationBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         if (Object != null && !Object.HasInputAuthority) return;
-        _moveInputVector = context.ReadValue<Vector2>();
+        MoveInputVector = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -100,7 +100,7 @@ public class CharacterInputHandler : SimulationBehaviour
         NetworkInputData networkInputData = new NetworkInputData();
 
         networkInputData.aimForwardVector = _localCameraHandler.transform.forward;
-        networkInputData.movementInput = _moveInputVector;
+        networkInputData.movementInput = MoveInputVector;
         networkInputData.isJumpPressed = _isJumped;
         networkInputData.isFirePressed = _isFired;
         networkInputData.isGrenadePressed = _isGrenade;
